@@ -1,0 +1,20 @@
+<launch>
+
+ <!--     <node name="realsense_image" pkg="realsense_ros_wrapper" type="rs-imshow" clear_params="true" output="screen">
+
+		<remap from="/RGB_image" to="/camera/rgb/image_raw"  />
+		<remap from="/Depth_image" to="/camera/depth_registered/image_raw"  />
+
+    </node>-->
+
+<!--   <node name = "runslam" pkg="ORB_SLAM2" type="Mono" args ="/media/tx2/Drive/wuzida/ORB_SLAM2/Vocabulary/ORBvoc.txt /media/tx2/Drive/wuzida/ORB_SLAM2/Examples/Monocular/EuRoC.yaml" output="screen"/> -->
+
+    <node name = "runslam" pkg="ORB_SLAM2" type="RGBD" args ="/media/tx2/Drive/wuzida/ORB_SLAM2/Vocabulary/ORBvoc.txt /media/tx2/Drive/wuzida/catkin_ws_realsense/src/realsense_ros_wrapper/RealsenseD435.yaml" output="screen">
+
+		<remap from="/camera/rgb/image_raw" to="/camera/color/image_raw"  />
+		<remap from="/camera/depth_registered/image_raw" to="/camera/depth/image_rect_raw"  />
+
+
+    </node>
+    <include file="/media/tx2/Drive/wuzida/catkin_ws_realsense/src/realsense-ros/realsense2_camera/launch/rs_camera.launch"/>
+</launch>
