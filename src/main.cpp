@@ -49,15 +49,16 @@ void save_frame_depth_data(int category,
     }
 }
 
-int main(int argc, char * argv[]) try
+int main(int argc, char * argv[]) 
+try
 {
     // Initialnization
     ros::init(argc, argv, "image_publisher");
     ros::NodeHandle nh;
 
     image_transport::ImageTransport it(nh);
-    image_transport::Publisher pub = it.advertise("RGB_image", 1);
-    image_transport::Publisher pub2 = it.advertise("Depth_image", 1);
+    image_transport::Publisher pub = it.advertise("/RGB_image", 1);
+    image_transport::Publisher pub2 = it.advertise("/Depth_image", 1);
     sensor_msgs::ImagePtr msgRGB,msgD;
 
     // Declare depth colorizer for pretty visualization of depth data
@@ -77,8 +78,8 @@ int main(int argc, char * argv[]) try
     const auto color_name = "Display Color";
     const auto depth_name = "Display Depth";
 
-    namedWindow(color_name, WINDOW_AUTOSIZE);
-    namedWindow(depth_name, WINDOW_AUTOSIZE);
+   // namedWindow(color_name, WINDOW_AUTOSIZE);
+   // namedWindow(depth_name, WINDOW_AUTOSIZE);
 
     char keyinput;
     int catagory=0;
@@ -125,7 +126,7 @@ int main(int argc, char * argv[]) try
         // Update the window with new data
         imshow(color_name, image_color);
         imshow(depth_name, image_depth);
-
+        waitKey(10);  // essential, otherwise the show window will not appear
         ros::spinOnce();
 
         loop_rate.sleep();

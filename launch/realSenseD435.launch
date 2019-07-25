@@ -1,20 +1,21 @@
 <launch>
 
- <!--     <node name="realsense_image" pkg="realsense_ros_wrapper" type="rs-imshow" clear_params="true" output="screen">
+    <node name="realsense_image" pkg="realsense_ros_wrapper" type="rs-imshow" clear_params="true" output="screen">
 
-		<remap from="/RGB_image" to="/camera/rgb/image_raw"  />
-		<remap from="/Depth_image" to="/camera/depth_registered/image_raw"  />
-
-    </node>-->
-
-<!--   <node name = "runslam" pkg="ORB_SLAM2" type="Mono" args ="/media/tx2/Drive/wuzida/ORB_SLAM2/Vocabulary/ORBvoc.txt /media/tx2/Drive/wuzida/ORB_SLAM2/Examples/Monocular/EuRoC.yaml" output="screen"/> -->
-
-    <node name = "runslam" pkg="ORB_SLAM2" type="RGBD" args ="/media/tx2/Drive/wuzida/ORB_SLAM2/Vocabulary/ORBvoc.txt /media/tx2/Drive/wuzida/catkin_ws_realsense/src/realsense_ros_wrapper/RealsenseD435.yaml" output="screen">
-
-		<remap from="/camera/rgb/image_raw" to="/camera/color/image_raw"  />
-		<remap from="/camera/depth_registered/image_raw" to="/camera/depth/image_rect_raw"  />
-
+	 	<remap from="/RGB_image" to="/RGB_image"  />
+		<remap from="/Depth_image" to="/Depth_image"  />
 
     </node>
-    <include file="/media/tx2/Drive/wuzida/catkin_ws_realsense/src/realsense-ros/realsense2_camera/launch/rs_camera.launch"/>
+
+
+    <node name = "runslam" pkg="ORB_SLAM2" type="RGBD	" args ="/media/tx2/Drive/wuzida/ORB_SLAM2/Vocabulary/ORBvoc.txt /media/tx2/Drive/wuzida/catkin_ws/src/realsense_ros_wrapper/RealsenseD435.yaml" output="screen">
+
+		<remap from="/camera/rgb/image_raw" to="/RGB_image"  />
+		<remap from="/camera/depth/image_raw" to="/Depth_image"  />
+
+   </node>
+ <!--   <node pkg="mobile_maskRCNN" name="maskrcnn_node" type="demo_maskrcnn_2.py" output="screen"> 
+		<remap from="/maskrcnn_image" to="/maskrcnn_image"  />
+    </node>
+-->
 </launch>
