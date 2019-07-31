@@ -15,7 +15,7 @@
 #include <image_transport/image_transport.h>
 
 using namespace cv;
-
+using namespace std;
 
 void save_frame_depth_data(int category,
                            int idx,
@@ -78,8 +78,8 @@ try
     const auto color_name = "Display Color";
     const auto depth_name = "Display Depth";
 
-   // namedWindow(color_name, WINDOW_AUTOSIZE);
-   // namedWindow(depth_name, WINDOW_AUTOSIZE);
+    namedWindow(color_name, WINDOW_AUTOSIZE);
+    namedWindow(depth_name, WINDOW_AUTOSIZE);
 
     char keyinput;
     int catagory=0;
@@ -104,14 +104,16 @@ try
 
         rs2::frameset data = pipe.wait_for_frames(); // Wait for next set of frames from the camera
         data = align_to_color.process(data);
-     	rs2::frame depth = data.get_depth_frame();
+     	rs2::depth_frame depth= data.get_depth_frame();
         rs2::frame color = data.get_color_frame();
         rs2::frame depth_show = depth.apply_filter(color_map);
-
+        
         // Query frame size (width and height)
-        const int w = depth.as<rs2::video_frame>().get_width();
-        const int h = depth.as<rs2::video_frame>().get_height();
+        const int w = depth_show.as<rs2::video_frame>().get_width();
+        const int h = depth_show.as<rs2::video_frame>().get_height();
+       // float dist_to_center = depth.get_distance(w/2,h/2);
 
+	//cout << "distance from center to carema" << dist_to_center;
         // Create OpenCV matrix of size (w,h) from the colorized depth data
         Mat image_depth(Size(w, h), CV_8UC3, (void*)depth_show.get_data(), Mat::AUTO_STEP);
         Mat image_color(Size(w, h), CV_8UC3, (void*)color.get_data(), Mat::AUTO_STEP);
