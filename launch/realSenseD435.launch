@@ -10,7 +10,7 @@
 
     <node name = "runslam" pkg="ORB_SLAM2" type="RGBD" args ="/media/tx2/Drive/wuzida/ORB_SLAM2/Vocabulary/ORBvoc.txt /media/tx2/Drive/wuzida/catkin_ws/src/realsense_ros_wrapper/RealsenseD435.yaml" output="screen">
 
-		<remap from="/camera/rgb/image_raw" to="/maskrcnn_image"  />
+		<remap from="/camera/rgb/image_raw" to="/RGB_image"  />
 		<remap from="/camera/depth/image_raw" to="/Depth_image"  />
 
    </node>

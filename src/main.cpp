@@ -109,20 +109,21 @@ try
         rs2::frame depth_show = depth.apply_filter(color_map);
         
         // Query frame size (width and height)
-        const int w = depth_show.as<rs2::video_frame>().get_width();
-        const int h = depth_show.as<rs2::video_frame>().get_height();
+        const int w = depth.as<rs2::video_frame>().get_width();
+        const int h = depth.as<rs2::video_frame>().get_height();
        // float dist_to_center = depth.get_distance(w/2,h/2);
 
 	//cout << "distance from center to carema" << dist_to_center;
         // Create OpenCV matrix of size (w,h) from the colorized depth data
-        Mat image_depth(Size(w, h), CV_8UC3, (void*)depth_show.get_data(), Mat::AUTO_STEP);
+      //  Mat image_depth_show(Size(w, h), CV_8UC3, (void*)depth_show.get_data(), Mat::AUTO_STEP);
+        Mat image_depth(Size(w, h), CV_16UC1, (void*)depth.get_data(), Mat::AUTO_STEP); //16U comes from the official sdk
         Mat image_color(Size(w, h), CV_8UC3, (void*)color.get_data(), Mat::AUTO_STEP);
         cv::cvtColor(image_color, image_color, COLOR_BGR2RGB);
 
         msgRGB = cv_bridge::CvImage(std_msgs::Header(), "bgr8", image_color).toImageMsg();
         pub.publish(msgRGB);
 
-        msgD = cv_bridge::CvImage(std_msgs::Header(), "mono8", image_depth).toImageMsg();
+        msgD = cv_bridge::CvImage(std_msgs::Header(), "mono16", image_depth).toImageMsg();
         pub2.publish(msgD);
 
         // Update the window with new data
